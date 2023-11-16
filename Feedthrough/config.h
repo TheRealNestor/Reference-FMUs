@@ -20,8 +20,8 @@
 #define FIXED_SOLVER_STEP 1
 #define DEFAULT_STOP_TIME 10
 
-#define A_MAX_ROWS 5
-#define A_MAX_COLS 5
+#define MAX_ROWS 5
+#define MAX_COLS 5
 
 #define FLOAT_ARRAY_MAX_LEN 128
 
@@ -32,8 +32,8 @@ typedef enum {
 } ValueReference;
 
 typedef struct {
-    double A[A_MAX_ROWS][A_MAX_COLS];
-    double B[A_MAX_ROWS][A_MAX_COLS];
+    double A[MAX_ROWS][MAX_COLS];
+    double B[MAX_ROWS][MAX_COLS];
     size_t A_rows;
     size_t A_cols;
     size_t B_rows;

@@ -33,19 +33,27 @@
     <UInt64 name="n" valueReference="2" description="" causality="structuralParameter" variability="tunable" start="3" min="1" max="5"/>
     <UInt64 name="u_m" valueReference="6" description="" causality="structuralParameter" variability="tunable" start="3" min="1" max="5"/>
     <UInt64 name="u_n" valueReference="7" description="" causality="structuralParameter" variability="tunable" start="3" min="1" max="5"/>
-    <Float64 name="u" valueReference="3" description="" causality="input" start="1 0 0 1 0 0 0 1 0">
-      <Dimension valueReference="6"/>  
-      <Dimension valueReference="7"/> 
-    </Float64>
+    
+    <ScalarVariable name="u" valueReference="3" causality="input">
+      <Float64 start="1 0 0 0 1 0 0 0 1">
+        <Dimension start="u_m" />
+        <Dimension start="u_n" />
+      </Float64>
+    </ScalarVariable>
 
-    <Float64 name="A" valueReference="4" causality="parameter" variability="tunable" start="1 0 0 1">
-      <Dimension valueReference="1"/>
-      <Dimension valueReference="2"/>
-    </Float64>
-    <Float64 name="y" valueReference="5" causality="output">
-      <Dimension valueReference="1"/> 
-      <Dimension valueReference="2"/>  
-    </Float64>
+    <ScalarVariable name="A" valueReference="4" causality="parameter" variability="tunable">
+      <Float64 start="2 0 0 0 2 0 0 0 2">
+        <Dimension valueReference="1"/>  <!-- Refers to m -->
+        <Dimension valueReference="2"/>  <!-- Refers to n -->
+      </Float64>
+    </ScalarVariable>
+
+    <ScalarVariable name="y" valueReference="5" causality="output">
+      <Float64 start="0 0 0 0 0 0 0 0 0">
+        <Dimension valueReference="1"/>  <!-- Refers to m -->
+        <Dimension valueReference="2"/>  <!-- Refers to n -->
+      </Float64>
+    </ScalarVariable>
   </ModelVariables>
 
   <ModelStructure>

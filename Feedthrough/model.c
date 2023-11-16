@@ -10,9 +10,15 @@ void setStartValues(ModelInstance *comp) {
     M(B_cols) = 3; 
 
     // identity matrix if square
-    for (int i = 0; i < A_MAX_ROWS; i++) {
-        for (int j = 0; j < A_MAX_COLS; j++) {
+    for (int i = 0; i < MAX_ROWS; i++) {
+        for (int j = 0; j < MAX_COLS; j++) {
             M(A)[i][j] = i == j ? 1 : 0;
+    }}
+
+    // initialize b also as identity matrix
+    for (int i = 0; i < MAX_ROWS; i++) {
+        for (int j = 0; j < MAX_COLS; j++) {
+            M(B)[i][j] = i == j ? 1 : 0;
     }}
 
 }
@@ -28,7 +34,7 @@ Status calculateValues(ModelInstance *comp) {
 }
 
 Status getFloat64(ModelInstance* comp, ValueReference vr, double values[], size_t nValues, size_t* index) {
-    calculateValues(comp); // Update the output 'B' before getting values
+    calculateValues(comp); 
 
     switch (vr) {
         case vr_time:
@@ -66,7 +72,7 @@ Status setFloat64(ModelInstance* comp, ValueReference vr, const double values[],
                     M(A)[i][j] = values[(*index)++];
                 }
             }
-            calculateValues(comp); // Update the output 'B' after setting 'A'
+            calculateValues(comp);
             return OK;
         default:
             logError(comp, "Set Float64 is not allowed for value reference %u.", vr);
