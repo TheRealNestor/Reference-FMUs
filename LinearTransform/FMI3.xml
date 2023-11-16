@@ -38,11 +38,11 @@
       <Dimension valueReference="7"/> 
     </Float64>
 
-    <Float64 name="A" valueReference="4" causality="parameter" variability="tunable" start="1 0 0 1">
+    <Float64 name="A" valueReference="4" causality="parameter" variability="tunable" start="2 0 0 0 2 0 0 0 2">
       <Dimension valueReference="1"/>
       <Dimension valueReference="2"/>
     </Float64>
-    <Float64 name="y" valueReference="5" causality="output">
+    <Float64 name="y" valueReference="5" causality="output" start="0 0 0 0 0 0 0 0 0">
       <Dimension valueReference="1"/> 
       <Dimension valueReference="2"/>  
     </Float64>

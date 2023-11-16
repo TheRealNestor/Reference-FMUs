@@ -44,11 +44,11 @@
     <UInt64 name="B_cols" valueReference="B_cols_ref" causality="structuralParameter" variability="tunable" start="2" min="1" max="5"/>
 
 
-    <Float64 name="A" valueReference="1" causality="input">
+    <Float64 name="A" valueReference="1" causality="input" start="1 0 0 0 1 0 0 0 1">
       <Dimension valueReference="A_rows_ref"/>
       <Dimension valueReference="A_cols_ref"/>
     </Float64>
-    <Float64 name="B" valueReference="2" causality="output">
+    <Float64 name="B" valueReference="2" causality="output" start="1 0 0 0 1 0 0 0 1">
       <Dimension valueReference="B_rows_ref"/>
       <Dimension valueReference="B_cols_ref"/>
     </Float64>
