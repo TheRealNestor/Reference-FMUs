@@ -3,36 +3,42 @@
 
 
 void setStartValues(ModelInstance *comp) {
+    M(m) = 3;
+    M(n) = 3;
+    M(u_m) = 3;
+    M(u_n) = 3;
 
-    M(m) = 2;
-    M(n) = 2;
-
-    // identity matrix
+    // Initialize A as a 2-diagonal matrix
     for (int i = 0; i < M_MAX; i++) {
-    for (int j = 0; j < N_MAX; j++) {
-        M(A)[i][j] = i == j ? 1 : 0;
-    }}
-
-    for (int i = 0; i < M_MAX; i++) {
-        M(u)[i] = i + 1;
-    }
-
-    for (int i = 0; i < N_MAX; i++) {
-        M(y)[i] = 0;
-    }
-
-}
-
-Status calculateValues(ModelInstance *comp) {
-
-    // y = A * u
-    for (size_t i = 0; i < M(m); i++) {
-        M(y)[i] = 0;
-        for (size_t j = 0; j < M(n); j++) {
-            M(y)[i] += M(A)[i][j] * M(u)[j];
+        for (int j = 0; j < N_MAX; j++) {
+            M(A)[i][j] = i == j ? 2 : 0;
         }
     }
 
+    // Initialize u as identity matrix (will be input of other FMU)
+    for (int i = 0; i < U_MAX_ROWS; i++) {
+        for (int j = 0; j < U_MAX_COLS; j++) {
+            M(u)[i][j] = i == j ? 1 : 0; 
+        }
+    }
+
+    for (int i = 0; i < Y_MAX_ROWS; i++) {
+        for (int j = 0; j < Y_MAX_COLS; j++) {
+            M(y)[i][j] = 0; 
+        }
+    }
+}
+
+Status calculateValues(ModelInstance *comp) {
+    // y = A * u (matrix multiplication)
+    for (size_t i = 0; i < M(m); i++) {
+        for (size_t j = 0; j < M(n); j++) {
+            M(y)[i][j] = 0;
+            for (size_t k = 0; k < M(n); k++) {
+                M(y)[i][j] += M(A)[i][k] * M(u)[k][j];
+            }
+        }
+    }
     return OK;
 }
 
@@ -46,9 +52,11 @@ Status getFloat64(ModelInstance* comp, ValueReference vr, double values[], size_
             values[(*index)++] = comp->time;
             return OK;
         case vr_u:
-            ASSERT_NVALUES(M(n));
-            for (size_t i = 0; i < M(n); i++) {
-                values[(*index)++] = M(u)[i];
+            ASSERT_NVALUES(M(u_m) * M(u_n));
+            for (size_t i = 0; i < M(u_m); i++) {
+                for (size_t j = 0; j < M(u_n); j++) {
+                    values[(*index)++] = M(u)[i][j];
+                }
             }
             return OK;
         case vr_A:
@@ -59,9 +67,11 @@ Status getFloat64(ModelInstance* comp, ValueReference vr, double values[], size_
             }
             return OK;
         case vr_y:
-            ASSERT_NVALUES(1);
+            ASSERT_NVALUES(M(m) * M(n));  // Adjust for matrix size
             for (size_t i = 0; i < M(m); i++) {
-                values[(*index)++] = M(y)[i];
+                for (size_t j = 0; j < M(n); j++) {
+                    values[(*index)++] = M(y)[i][j];
+                }
             }
             return OK;
         default:
@@ -73,13 +83,15 @@ Status getFloat64(ModelInstance* comp, ValueReference vr, double values[], size_
 Status setFloat64(ModelInstance* comp, ValueReference vr, const double values[], size_t nValues, size_t* index) {
 
     switch (vr) {
-        case vr_u:
-            ASSERT_NVALUES(M(n));
-            for (size_t i = 0; i < M(n); i++) {
-                M(u)[i] = values[(*index)++];
+            case vr_u:
+        ASSERT_NVALUES(M(u_m) * M(u_n));
+        for (size_t i = 0; i < M(u_m); i++) {
+            for (size_t j = 0; j < M(u_n); j++) {
+                M(u)[i][j] = values[(*index)++];
             }
-            calculateValues(comp);
-            return OK;
+        }
+        calculateValues(comp);
+        return OK;
         case vr_A:
             ASSERT_NVALUES(M(m) * M(n));
             for (size_t i = 0; i < M(m); i++)

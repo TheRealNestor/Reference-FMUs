@@ -171,7 +171,7 @@ if (${FMI_VERSION} EQUAL 3)
 endif()
 
 # Examples
-set(MODEL_NAMES BouncingBall Dahlquist Feedthrough Stair VanDerPol)
+set(MODEL_NAMES BouncingBall Dahlquist Stair VanDerPol)
 
 if (${FMI_VERSION} EQUAL 1)
     if (${FMI_TYPE} STREQUAL CS)

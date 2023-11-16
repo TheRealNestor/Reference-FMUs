@@ -21,6 +21,13 @@
 #define M_MAX 5
 #define N_MAX 5
 
+#define U_MAX_ROWS 5
+#define U_MAX_COLS 5 
+
+#define Y_MAX_ROWS M_MAX
+#define Y_MAX_COLS U_MAX_COLS
+
+
 typedef enum {
     vr_time,
     vr_m,
@@ -33,9 +40,11 @@ typedef enum {
 typedef struct {
     uint64_t m;
     uint64_t n;
-    double u[N_MAX];
+    uint64_t u_m;
+    uint64_t u_n;
+    double u[U_MAX_ROWS][U_MAX_COLS];
     double A[M_MAX][N_MAX];
-    double y[M_MAX];
+    double y[Y_MAX_ROWS][Y_MAX_COLS];
 } ModelData;
 
 #endif /* config_h */

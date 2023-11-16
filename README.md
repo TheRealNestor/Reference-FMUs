@@ -46,24 +46,29 @@ You can download the pre-built Reference FMUs and fmusim executables from [relea
 ## Repository structure
 
 `<model>`
+
 - `config.h` - model specific types and definitions
 - `FMI{1CS|1ME|2|3}.xml` - model descriptions
 - `model.c` - implementation of the model
 
 `include`
+
 - `fmi{|2|3}Functions.h` - FMI header files
 - `model.h` - generic model interface
 - `cosimulation.h` - generic co-simulation interface
 
 `src`
+
 - `fmi{1|2|3}Functions.c` - FMI implementations
 - `cosimulation.c` - generic co-simulation
 
 `examples`
+
 - `*.c` - various FMI 3.0 import examples
 - `Examples.cmake` - CMake configuration for the example projects
 
 `fmusim`
+
 - sources of the `fmusim` executable
 
 ## Build the FMUs
